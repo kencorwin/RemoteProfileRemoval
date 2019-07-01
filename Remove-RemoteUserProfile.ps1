@@ -23,3 +23,5 @@ ForEach ($RemoteProfile in $UserProfileObjects)
                                                 ProfilePath = $ProfilePath }
     $Profiles += $Object
     }
+
+clear
