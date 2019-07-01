@@ -12,7 +12,7 @@ if (-not (Test-Connection -Count 1 -Quiet -ComputerName $HostName) )
     }
 
 $UserProfileObjects = Get-WmiObject -ComputerName $HostName -ClassName Win32_UserProfile -Credential $Creds
-ForEach ($RemoteProfile in $UserProfileObjects)
+ForEach ($RemoteProfile in ($UserProfileObjects | where { $_.Special -ne $true }))
     {
     $Object = $null
     $i++
@@ -25,3 +25,18 @@ ForEach ($RemoteProfile in $UserProfileObjects)
     }
 
 clear
+[string[]]$Menu = " Please select a profile number from below you wish to delete"
+foreach ( $ProfileMenu in $Profiles ) {$Menu += "   $($ProfileMenu.EntryNumber) `t $($ProfileMenu.UserName)`r"}
+$Menu
+[string]$ProfileNumber = Read-Host -Prompt "You can select multiplie profiles by seperating the numbers with a comma"
+$SelectedNumbers = $ProfileNumber.split(",")
+
+foreach ( $Number in $SelectedNumbers )
+    {
+    if ( $Number -ge 1 -and $Number -le $i ) 
+        {
+        $ProfileToDel = $Profiles | where { $_.EntryNumber -eq $Number }
+        $ContinueDelete = Read-Host "Are you sure you want to delete $($ProfileToDel.UserName)"
+        if (
+        }
+    }
