@@ -24,4 +24,6 @@ ForEach ($RemoteProfile in $UserProfileObjects)
     $Profiles += $Object
     }
 
+$SelectedProfile = Out-GridView $Profiles -Select Single
+
 clear
